@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+<div class = "container">
+    <header class = "jumbotron">
+        <div class = "container">
+            <a href = "/topics">Back</a>
+            <h1><%= topic.name %></h1>
+            <a href = "/topics/<%= topic._id %>/posts/new">New Post</a>
+        </div>
+    </header>
+
+    <% topic.posts.forEach(function(post){ %>
+
+        <div class = "row">
+            <div class = "col-sm">
+                <a href = "/topics/<%= topic._id %>/posts/<%= post._id %>"><h4><%= post.title %></h4></a>
+                <h5><%= post.author.username %></h5>
+                <p><%= post.content.substring(0, 100) %>...</p>
+                <hr>
+            </div>
+        </div>
+
+    <% }); %>
+
+</div>
+
+
+<% include ../partials/footer %>

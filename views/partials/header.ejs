@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Game Forum</title>
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav ml-auto">
+
+                <% if(!currentUser){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <span class = "navbar-text">Signed in as <%= currentUser.username %></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+
+        <div class = "container">
+            <% if(error && error.length > 0){ %>
+                <div class="alert alert-danger" role="alert">
+                <%= error %>
+                </div>
+            <% } %>
+            
+            <% if(success && success.length > 0){ %>
+                <div class="alert alert-success" role="alert">
+                <%= success %>
+                </div>
+            <% } %>
+        </div>

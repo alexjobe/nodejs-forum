@@ -1,0 +1,52 @@
+<% include ../partials/header %>
+
+<div class = "container">
+    <div class = "row">
+        <div class = "col-sm">
+            <a href = "/topics/<%= topic_id %>/posts">Back</a>
+            <h2><%= post.title %></h4>
+            <h5>By <%= post.author.username %></h5>
+            <p><%= post.content %></p>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col-sm">
+            <div class = "form-inline">
+                <% if(currentUser && post.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                    <form action = "/topics/<%= topic_id %>/posts/<%= post._id %>/edit" method = "GET">
+                        <button class = "btn btn-warning">Edit</button>
+                    </form>
+                    <form action = "/topics/<%= topic_id %>/posts/<%= post._id %>?_method=DELETE" method = "POST">
+                        <button class = "btn btn-danger">Delete</button>
+                    </form>
+                <% } %>
+                <form action = "/topics/<%= topic_id %>/posts/<%= post._id %>/comments/new" method = "GET">
+                    <button class = "btn btn-primary">Reply</button>
+                </form>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <% post.comments.forEach(function(comment){ %>
+        <div class = "row">
+            <div class = "col-sm">
+                <p><%= comment.content %></p>
+                <strong>By <%= comment.author.username %></strong>
+                <div class = "form-inline">
+                    <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                        <form action = "/topics/<%= topic_id %>/posts/<%= post._id %>/comments/<%= comment._id %>/edit" method = "GET">
+                            <button class = "btn btn-warning">Edit</button>
+                        </form>
+                        <form action = "/topics/<%= topic_id %>/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method = "POST">
+                            <button class = "btn btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+                <hr>
+            </div>
+        </div>
+    <% }); %>
+
+</div>
+
+<% include ../partials/footer %>

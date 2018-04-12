@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+
+<div class = "container">
+    <header class = "jumbotron">
+        <div class = "container">
+            <h1>Welcome to the Forum!</h1>
+            <% if(currentUser && currentUser.isAdmin){ %>
+                <a href = "/topics/new">New Topic</a>
+            <% } %>
+        </div>
+    </header>
+
+    <% topics.forEach(function(topic){ %>
+
+        <div class = "row">
+            <div class = "col-sm">
+                <a href = "/topics/<%= topic._id %>/posts"><h4><%= topic.name %></h4></a>
+                <p><%= topic.description %></p>
+                <% if(currentUser && currentUser.isAdmin){ %>
+                    <div class = "form-inline">
+                        <form action = "/topics/<%= topic._id %>/edit" method = "GET">
+                            <button class = "btn btn-warning">Edit</button>
+                        </form>
+                    </div>
+                <% } %>
+                <hr>
+            </div>
+        </div>
+
+    <% }); %>
+
+</div>
+
+
+<% include ../partials/footer %>
