@@ -17,7 +17,21 @@ router.get("/", function(req, res){
             console.log(err);
             res.redirect("back");
         } else {
-            res.render("posts/index", {topic: topic});
+            res.render("posts/index", {topic: topic, page: 1});
+        }
+    });
+
+});
+
+// INDEX - Show posts on a given page
+router.get("/page/:page_num", function(req, res){
+
+    Topic.findById(req.params.topic_id).populate("posts").exec(function(err, topic){
+        if(err){
+            console.log(err);
+            res.redirect("back");
+        } else {
+            res.render("posts/index", {topic: topic, page: req.params.page_num});
         }
     });
 
