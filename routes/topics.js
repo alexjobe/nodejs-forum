@@ -39,8 +39,9 @@ router.get("/new", middleware.checkAdmin, function(req, res){
 // EDIT - Show form to edit an existing topic
 router.get("/:topic_id/edit", middleware.checkAdmin, function(req, res){
     Topic.findById(req.params.topic_id, function(err, topic){
-        if(err){
-            console.log(err);
+        if(err || !topic){
+            req.flash("error", "Topic not found");
+            res.redirect("back");
         } else {
             res.render("topics/edit", {topic: topic});
         }

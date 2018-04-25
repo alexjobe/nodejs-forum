@@ -17,12 +17,10 @@ middlewareObj.checkPostOwnership = function(req, res, next) {
     // Is user logged in?
     if(req.isAuthenticated()){
         Post.findById(req.params.post_id, function(err, foundPost){
-            if(err){
+            if(err || !foundPost){
+                req.flash("error", "Post not found");
                 res.redirect("back");
             } else {
-                if (!foundPost) {
-                    return res.redirect("back");
-                }
                 // Does user own the post?
                 if(foundPost.author.id.equals(req.user._id) || req.user.isAdmin){
                     next();
@@ -42,7 +40,8 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
     // Is user logged in?
     if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, function(err, foundComment){
-            if(err){
+            if(err || !foundComment){
+                req.flash("error", "Comment not found");
                 res.redirect("back");
             } else {
                 // Does user own the comment?
